@@ -1,0 +1,84 @@
+<Window x:Class="ShoeStore.OrderWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Style="{StaticResource {x:Type Window}}"
+        Width="800" Height="650" MinWidth="690" MinHeight="550" WindowStartupLocation="CenterOwner">
+    <DockPanel Background="White">
+        <Border DockPanel.Dock="Top" Background="{StaticResource HeaderBrush}" Padding="20,14">
+            <TextBlock x:Name="FormTitle" FontSize="27" FontWeight="Bold"/>
+        </Border>
+        <DockPanel DockPanel.Dock="Bottom" Margin="20,12,20,16" LastChildFill="False">
+            <Button DockPanel.Dock="Left" Content="Назад" IsCancel="True"/>
+            <Button DockPanel.Dock="Right" Content="Сохранить" Style="{StaticResource PrimaryButton}"
+                    Click="Save_Click"/>
+        </DockPanel>
+        <Grid Margin="20,13,20,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <UniformGrid Columns="2" Margin="0,0,0,9">
+                <StackPanel Margin="0,0,9,0">
+                    <Label Content="Покупатель" Target="{Binding ElementName=CustomerInput}" Padding="0,0,0,3"/>
+                    <ComboBox x:Name="CustomerInput" DisplayMemberPath="CustomerLabel" SelectedValuePath="UserId"/>
+                </StackPanel>
+                <StackPanel>
+                    <Label Content="Пункт выдачи" Target="{Binding ElementName=PickupPointInput}" Padding="0,0,0,3"/>
+                    <ComboBox x:Name="PickupPointInput" DisplayMemberPath="FullAddress" SelectedValuePath="PickupPointId"/>
+                </StackPanel>
+            </UniformGrid>
+            <UniformGrid Grid.Row="1" Columns="2" Margin="0,0,0,9">
+                <StackPanel Margin="0,0,9,0">
+                    <Label Content="Дата заказа" Target="{Binding ElementName=OrderDateInput}" Padding="0,0,0,3"/>
+                    <DatePicker x:Name="OrderDateInput" SelectedDateFormat="Short" DateValidationError="OrderDateInput_Error"/>
+                </StackPanel>
+                <StackPanel>
+                    <Label Content="Дата доставки" Target="{Binding ElementName=DeliveryDateInput}" Padding="0,0,0,3"/>
+                    <DatePicker x:Name="DeliveryDateInput" SelectedDateFormat="Short" DateValidationError="OrderDateInput_Error"/>
+                </StackPanel>
+            </UniformGrid>
+            <UniformGrid Grid.Row="2" Columns="2" Margin="0,0,0,13">
+                <StackPanel Margin="0,0,9,0">
+                    <Label Content="Статус" Target="{Binding ElementName=StatusInput}" Padding="0,0,0,3"/>
+                    <ComboBox x:Name="StatusInput" DisplayMemberPath="StatusName" SelectedValuePath="OrderStatusId"/>
+                </StackPanel>
+                <StackPanel>
+                    <Label Content="Код получения" Target="{Binding ElementName=CodeInput}" Padding="0,0,0,3"/>
+                    <TextBox x:Name="CodeInput" MaxLength="20"/>
+                </StackPanel>
+            </UniformGrid>
+            <TextBlock Grid.Row="3" Text="Состав заказа" FontSize="20" FontWeight="Bold" Margin="0,0,0,6"/>
+            <Grid Grid.Row="4" Margin="0,0,0,8">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="112"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Margin="0,0,8,0">
+                    <Label Content="Товар" Target="{Binding ElementName=ProductInput}" Padding="0,0,0,3"/>
+                    <ComboBox x:Name="ProductInput" DisplayMemberPath="SkuAndName" SelectedValuePath="ProductId"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1" Margin="0,0,8,0">
+                    <Label Content="Количество" Target="{Binding ElementName=QuantityInput}" Padding="0,0,0,3"/>
+                    <TextBox x:Name="QuantityInput" Text="1" MaxLength="10"/>
+                </StackPanel>
+                <Button Grid.Column="2" VerticalAlignment="Bottom" Content="Добавить / обновить"
+                        Click="AddLine_Click" Style="{StaticResource PrimaryButton}"/>
+            </Grid>
+            <DataGrid Grid.Row="5" x:Name="LinesGrid" RowHeaderWidth="0" SelectionChanged="LinesGrid_SelectionChanged">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Артикул | товар" Binding="{Binding ProductTitle}" Width="*"/>
+                    <DataGridTextColumn Header="Количество" Binding="{Binding Quantity}" Width="130"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Button Grid.Row="6" Content="Убрать выбранную позицию" HorizontalAlignment="Left"
+                    Margin="0,8,0,0" Click="RemoveLine_Click"/>
+        </Grid>
+    </DockPanel>
+</Window>
+

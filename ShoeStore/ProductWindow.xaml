@@ -1,0 +1,74 @@
+<Window x:Class="ShoeStore.ProductWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Style="{StaticResource {x:Type Window}}"
+        Width="840" Height="670" MinWidth="740" MinHeight="525" WindowStartupLocation="CenterOwner">
+    <DockPanel Background="White">
+        <Border DockPanel.Dock="Top" Background="{StaticResource HeaderBrush}" Padding="20,14">
+            <TextBlock x:Name="FormTitle" FontSize="27" FontWeight="Bold"/>
+        </Border>
+        <DockPanel DockPanel.Dock="Bottom" Margin="20,12,20,16" LastChildFill="False">
+            <Button DockPanel.Dock="Left" Content="Назад" IsCancel="True"/>
+            <Button DockPanel.Dock="Right" Content="Сохранить" Style="{StaticResource PrimaryButton}"
+                    IsDefault="True" Click="Save_Click"/>
+            <Button x:Name="DeleteButton" DockPanel.Dock="Right" Content="Удалить товар"
+                    Margin="0,0,10,0" Click="Delete_Click"/>
+        </DockPanel>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <Grid Margin="20,15,20,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="220"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Margin="0,0,16,0">
+                    <Border BorderBrush="{StaticResource BorderBrush}" BorderThickness="1" Padding="8" Height="166">
+                        <Image x:Name="ProductPhoto" Stretch="Uniform"/>
+                    </Border>
+                    <Button Content="Выбрать фото…" Click="SelectPhoto_Click" Margin="0,8,0,3"/>
+                    <TextBlock Text="До 300 × 200 пикселей" Foreground="#414B42" TextWrapping="Wrap"/>
+                </StackPanel>
+                <StackPanel Grid.Column="1">
+                    <StackPanel x:Name="IdRow" Orientation="Horizontal" Margin="0,0,0,7">
+                        <TextBlock Text="ID товара: " FontWeight="Bold"/>
+                        <TextBlock x:Name="ProductIdText"/>
+                    </StackPanel>
+                    <Label Content="Артикул" Target="{Binding ElementName=SkuInput}" Padding="0,0,0,3"/>
+                    <TextBox x:Name="SkuInput" MaxLength="32" Margin="0,0,0,8"/>
+                    <Label Content="Наименование" Target="{Binding ElementName=ProductNameBox}" Padding="0,0,0,3"/>
+                    <ComboBox x:Name="ProductNameBox" IsEditable="True" TextSearch.TextPath="Name"
+                              DisplayMemberPath="Name" Margin="0,0,0,8"/>
+                    <UniformGrid Columns="2">
+                        <StackPanel Margin="0,0,8,8">
+                            <Label Content="Категория" Target="{Binding ElementName=CategoryInput}" Padding="0,0,0,3"/>
+                            <ComboBox x:Name="CategoryInput" DisplayMemberPath="CategoryName" SelectedValuePath="CategoryId"/>
+                        </StackPanel>
+                        <StackPanel Margin="0,0,0,8">
+                            <Label Content="Производитель" Target="{Binding ElementName=ManufacturerInput}" Padding="0,0,0,3"/>
+                            <ComboBox x:Name="ManufacturerInput" DisplayMemberPath="ManufacturerName" SelectedValuePath="ManufacturerId"/>
+                        </StackPanel>
+                    </UniformGrid>
+                    <Label Content="Поставщик" Target="{Binding ElementName=SupplierInput}" Padding="0,0,0,3"/>
+                    <ComboBox x:Name="SupplierInput" DisplayMemberPath="SupplierName" SelectedValuePath="SupplierId" Margin="0,0,0,8"/>
+                    <UniformGrid Columns="3" Margin="0,0,0,8">
+                        <StackPanel Margin="0,0,8,0">
+                            <Label Content="Цена, ₽" Target="{Binding ElementName=PriceInput}" Padding="0,0,0,3"/>
+                            <TextBox x:Name="PriceInput" MaxLength="16"/>
+                        </StackPanel>
+                        <StackPanel Margin="0,0,8,0">
+                            <Label Content="Остаток" Target="{Binding ElementName=StockInput}" Padding="0,0,0,3"/>
+                            <TextBox x:Name="StockInput" MaxLength="10"/>
+                        </StackPanel>
+                        <StackPanel>
+                            <Label Content="Скидка, %" Target="{Binding ElementName=DiscountInput}" Padding="0,0,0,3"/>
+                            <TextBox x:Name="DiscountInput" MaxLength="6"/>
+                        </StackPanel>
+                    </UniformGrid>
+                    <Label Content="Описание" Target="{Binding ElementName=DescriptionInput}" Padding="0,0,0,3"/>
+                    <TextBox x:Name="DescriptionInput" Height="72" TextWrapping="Wrap" AcceptsReturn="True"
+                             VerticalScrollBarVisibility="Auto" MaxLength="1000"/>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+    </DockPanel>
+</Window>
+
